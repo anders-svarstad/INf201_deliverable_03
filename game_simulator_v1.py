@@ -2,12 +2,13 @@
 # Turid Torheim, NMBU, 2026
 
 import random
+import items
 
 
 class Character:
     """Represents a character in the RPG"""
 
-    def __init__(self, name: str, hp_max: int = 100, damage: int = 10) -> None:
+    def __init__(self, name: str, hp_max: int = 100, damage: int = 10, weapon_name: str = False, weapon_dice: int = 6) -> None:
         """
         Initialise the Character
 
@@ -19,11 +20,28 @@ class Character:
         self.name = name
         self._hp = hp_max  # Note: _hp indicated private attribute
         self.hp_max = hp_max
-        self.damage = damage
+        
+        if weapon_name is not False:
+            self.weapon = items.Weapon(weapon_name, weapon_dice)
+            self.damage = 0
+            self.wepon_chek=True
+            
+
+        else:
+            self.damage = damage
+            self.wepon_chek=False
+            
 
     def attack(self, target) -> None:
         """Attack and deal damage to target character"""
-        target.take_damage(self.damage)
+        print(self.wepon_chek)
+        if self.wepon_chek==False:
+            target.take_damage(self.damage)
+            
+            
+        else:
+            target.take_damage(self.weapon.roll_damage())
+            
 
     def introduce(self) -> None:
         """Creates string that introduces character"""
@@ -74,13 +92,15 @@ class Dize:
         return self.roll()
 
 
-d6=Dize(6)
-print(d6())
+#d6=Dize(6)
+#print(d6())
 
-#dave=Character("Dave", hp_max=60, damage=15)
-#peter=Character("Peter", hp_max=70, damage=10)
-#dave.attack(peter)
+dave=Character("Dave", hp_max=60, damage=15)
 
-#print(peter) 
-#print(dave) 
-#rint(peter.is_alive)
+peter=Character("Peter", hp_max=70, damage=10, weapon_name="Sword", weapon_dice=8)
+print(dave) 
+peter.attack(dave)
+
+print(peter) 
+print(dave) 
+print(peter.is_alive)
