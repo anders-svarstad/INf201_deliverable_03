@@ -61,15 +61,18 @@ class Character:
 
 
     def take_damage(self, damage: int) -> None:
+        """reduce HP by damage amount"""
         self._hp -= damage
         self._hp = max(self._hp, 0) 
 
     def heal(self, amount: int) -> None:
+        """increase HP"""
         self._hp += amount
         self._hp = min(self._hp, self.hp_max)
 
     @property
     def is_alive(self) -> bool:
+        """Check if character is alive"""
         if not self._hp > 0:
             return False
         return True
@@ -78,6 +81,7 @@ class Character:
 
 
 class Dize:
+    """ dice"""
     def __init__(self, sides: int = 6) -> None:
         self.sides = sides
 
@@ -93,6 +97,7 @@ class Dize:
 
 
 class Warrior(Character):
+    """a subclass tat reduses damage"""
     def __init__(self, name: str, hp_max: int = 100, damage: int = 10, weapon_name: str = False, weapon_dice: int = 6, armor: int = 5) -> None:
         super().__init__(name, hp_max, damage, weapon_name, weapon_dice)
         self.armor = armor
@@ -103,6 +108,7 @@ class Warrior(Character):
         
 
 class Mage(Character):
+    """a subclass that attacs difrently"""
     def __init__(self, name: str, hp_max: int = 100, damage: int = 10, weapon_name: str = False, weapon_dice: int = 6, mana_max: int = 30, mana: int = 30) -> None:
         super().__init__(name, hp_max, damage, weapon_name, weapon_dice)
         self.mana_max = mana_max
@@ -122,6 +128,7 @@ class Mage(Character):
 
 
 class Battle:
+    """makes to characters repeatetly atac itchoter until one is dead"""
     def __init__(self, hero: Character, enemy: Character) -> None:
         self.hero = hero
         self.enemy = enemy
@@ -139,8 +146,6 @@ class Battle:
 
 
 
-#d6=Dize(6)
-#print(d6())
 
 dave=Warrior("Dave", hp_max=60, damage=15)
 
@@ -148,7 +153,3 @@ peter=Mage("Peter", hp_max=70, damage=10, weapon_name="Sword", weapon_dice=8)
 
 kamp=Battle(dave, peter)
 
-kamp.simulate_battle()
-print(kamp.hero.is_alive)
-print(kamp.enemy.is_alive)
-print("1")
