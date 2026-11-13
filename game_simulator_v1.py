@@ -4,7 +4,6 @@
 import random
 import items
 
-
 class Character:
     """Represents a character in the RPG"""
 
