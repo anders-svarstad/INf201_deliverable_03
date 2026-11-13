@@ -34,7 +34,6 @@ class Character:
 
     def attack(self, target) -> None:
         """Attack and deal damage to target character"""
-        print(self.wepon_chek)
         if self.wepon_chek==False:
             target.take_damage(self.damage)
             
@@ -117,15 +116,39 @@ class Mage(Character):
         else:
             self.mana += 5
             return super().attack(target)
+        
+
+
+
+
+class Battle:
+    def __init__(self, hero: Character, enemy: Character) -> None:
+        self.hero = hero
+        self.enemy = enemy
+    def play_rond(self) -> None:
+        self.hero.attack(self.enemy)
+        if self.enemy.is_alive:
+            self.enemy.attack(self.hero)
+
+    def simulate_battle(self) -> None:
+            while self.hero.is_alive and self.enemy.is_alive:
+                self.play_rond()
+
+
+
+
+
+
 #d6=Dize(6)
 #print(d6())
 
 dave=Warrior("Dave", hp_max=60, damage=15)
 
 peter=Mage("Peter", hp_max=70, damage=10, weapon_name="Sword", weapon_dice=8)
-print(dave) 
-peter.attack(dave)
 
-print(peter) 
-print(dave) 
-print(peter.is_alive)
+kamp=Battle(dave, peter)
+
+kamp.simulate_battle()
+print(kamp.hero.is_alive)
+print(kamp.enemy.is_alive)
+print("1")
