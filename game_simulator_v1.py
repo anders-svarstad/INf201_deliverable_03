@@ -23,13 +23,13 @@ class Character:
         
         if weapon_name is not False:
             self.weapon = items.Weapon(weapon_name, weapon_dice)
-            self.damage = 0
-            self.wepon_chek=True
+            self.damage = damage
+            self.wepon_chek = True
             
 
         else:
             self.damage = damage
-            self.wepon_chek=False
+            self.wepon_chek = False
             
 
     def attack(self, target) -> None:
@@ -49,7 +49,7 @@ class Character:
 
     def __repr__(self) -> str:
         """Representation of character object"""
-        return f"<Character name={self.name} hp={self.hp} damage={self.damage}>)"
+        return f"<Character name={self.name} hp = {self.hp} damage = {self.damage}>)"
 
     def __str__(self) -> str:
         """String representation of character object"""
@@ -92,12 +92,37 @@ class Dize:
         return self.roll()
 
 
+
+class Warrior(Character):
+    def __init__(self, name: str, hp_max: int = 100, damage: int = 10, weapon_name: str = False, weapon_dice: int = 6, armor: int = 5) -> None:
+        super().__init__(name, hp_max, damage, weapon_name, weapon_dice)
+        self.armor = armor
+
+    def take_damage(self, damage: int) -> None:
+        self._hp -= max(damage-self.armor, 0)
+        self._hp = max(self._hp, 0) 
+        
+
+class Mage(Character):
+    def __init__(self, name: str, hp_max: int = 100, damage: int = 10, weapon_name: str = False, weapon_dice: int = 6, mana_max: int = 30, mana: int = 30) -> None:
+        super().__init__(name, hp_max, damage, weapon_name, weapon_dice)
+        self.mana_max = mana_max
+        self.mana = mana
+
+
+    def attack(self, target):
+        if self.mana >= 10:
+            self.mana -= 10
+            target.take_damage(self.damage * 2)
+        else:
+            self.mana += 5
+            return super().attack(target)
 #d6=Dize(6)
 #print(d6())
 
-dave=Character("Dave", hp_max=60, damage=15)
+dave=Warrior("Dave", hp_max=60, damage=15)
 
-peter=Character("Peter", hp_max=70, damage=10, weapon_name="Sword", weapon_dice=8)
+peter=Mage("Peter", hp_max=70, damage=10, weapon_name="Sword", weapon_dice=8)
 print(dave) 
 peter.attack(dave)
 
