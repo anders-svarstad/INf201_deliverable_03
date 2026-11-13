@@ -1,6 +1,9 @@
 # Object-oriented game simulator
 # Turid Torheim, NMBU, 2026
 
+import random
+
+
 class Character:
     """Represents a character in the RPG"""
 
@@ -55,10 +58,29 @@ class Character:
         return True
 
 
-dave=Character("Dave", hp_max=60, damage=15)
-peter=Character("Peter", hp_max=70, damage=10)
-dave.attack(peter)
 
-print(peter) 
-print(dave) 
-print(peter.is_alive)
+
+class Dize:
+    def __init__(self, sides: int = 6) -> None:
+        self.sides = sides
+
+    def roll(self) -> int:
+        import random
+        return random.randint(1, self.sides)
+    def __repr__(self) -> str:
+        return f"Dize={self.sides}"
+
+    def __call__(self) -> int:
+        return self.roll()
+
+
+d6=Dize(6)
+print(d6())
+
+#dave=Character("Dave", hp_max=60, damage=15)
+#peter=Character("Peter", hp_max=70, damage=10)
+#dave.attack(peter)
+
+#print(peter) 
+#print(dave) 
+#rint(peter.is_alive)
